@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
   // Pass through (and rephrase) some acceptable errors
   if (process.env.NODE_ENV == "production") {
     if (message.includes("users_email_unique")) {
-      message = "A user with that email already exists.";
+      message = "This email address is already in use.";
     } else {
       message = "An error occured";
     }
