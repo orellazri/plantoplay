@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
 
@@ -15,7 +16,11 @@ router.post(
         throw new Error("Invalid input");
       }
 
-      res.json({ message: "register" });
+      let { email, password, display_name: displayName } = req.body;
+      const salt = await bcrypt.genSalt(10);
+      password = await bcrypt.hash(password, salt);
+
+      res.json({ message: "Successfully registered." });
     } catch (err) {
       next(err);
     }
