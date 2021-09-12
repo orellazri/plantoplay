@@ -1,6 +1,8 @@
 const router = require("express").Router();
 
-router.get("/register", (req, res, next) => {
+const db = require("../db");
+
+router.get("/register", async (req, res, next) => {
   try {
     res.json({ message: "register" });
   } catch (err) {
