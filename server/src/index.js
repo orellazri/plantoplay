@@ -49,7 +49,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("*", function (req, res) {
-  res.status(404).json({ error: "PPaNot found" });
+  res.status(404).json({ error: "Not found" });
 });
 
 app.listen(process.env.PORT, () => {
