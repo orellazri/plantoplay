@@ -42,7 +42,7 @@ router.post("/login", body("email").isEmail().normalizeEmail(), body("password")
       throw new Error("Invalid credentials");
     }
 
-    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
 
     res.json({ message: "Successfully logged in.", token });
   } catch (err) {
