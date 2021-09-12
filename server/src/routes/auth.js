@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
+const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 const { default: knex } = require("knex");
 
@@ -30,5 +31,9 @@ router.post(
     }
   }
 );
+
+router.post("/login", passport.authenticate("local"), (req, res) => {
+  res.json({ message: "Successfully logged in." });
+});
 
 module.exports = router;

@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
 require("dotenv").config();
 
+const initializePassport = require("./passport");
 const authRoutes = require("./routes/auth");
 
 // Set default environment variables
@@ -11,17 +14,21 @@ process.env.PORT = process.env.PORT || 8080;
 // Initialize Express
 const app = express();
 app.use(express.json());
-
-// CORS
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(cors());
 if (process.env.NODE_ENV != "production") {
   app.options("*", cors());
 }
 
+// Initialize passport
+initializePassport(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
 app.use("/auth", authRoutes);
 app.use("/", (req, res) => {
-  res.json({ message: "PlayToPlay API" });
+  res.json({ message: "PlayToPlay API " + req.user.email });
 });
 
 // Error handling
@@ -38,8 +45,9 @@ app.use((err, req, res, next) => {
       message = "An error occured";
     }
   }
+
   res.status(400).json({
-    error: message,
+    message,
   });
 });
 
