@@ -3,7 +3,7 @@ const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
 
-const initializePassport = require("./passport");
+const initializePassport = require("./config/passport");
 const authRoutes = require("./routes/auth");
 
 // Set default environment variables

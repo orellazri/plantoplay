@@ -1,8 +1,8 @@
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
-const { default: knex } = require("knex");
 
 const db = require("../db");
 
@@ -32,8 +32,22 @@ router.post(
   }
 );
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.json({ message: "Successfully logged in." });
+router.post("/login", body("email").isEmail().normalizeEmail(), body("password").isLength({ min: 5 }), async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await db("users").where({ email }).first();
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      throw new Error("Invalid credentials");
+    }
+
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+
+    res.json({ message: "Successfully logged in.", token });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
