@@ -25,7 +25,7 @@ app.use(passport.initialize());
 // Routes
 app.use("/auth", authRoutes);
 app.use("/", (req, res) => {
-  res.json({ message: "PlayToPlay API " + req.user.email });
+  res.json({ message: "PlayToPlay API" });
 });
 
 // Error handling
