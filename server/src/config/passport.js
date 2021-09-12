@@ -15,26 +15,12 @@ const initialize = (passport) => {
       try {
         const user = await db("users").where({ id: jwt_payload.id }).first();
 
-        return done(null, user);
+        return done(null, { id: user.id, email: user.email, displayName: user.display_name });
       } catch (err) {
         return done(null, false);
       }
     })
   );
-
-  // passport.serializeUser((user, done) => {
-  //   done(null, user.id);
-  // });
-
-  // passport.deserializeUser(async (id, done) => {
-  //   try {
-  //     const user = await db("users").where(id);
-
-  //     return done(null, user);
-  //   } catch (err) {
-  //     return done(null, false, { message: "Could not find user" });
-  //   }
-  // });
 };
 
 module.exports = initialize;
