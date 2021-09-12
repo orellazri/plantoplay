@@ -5,9 +5,9 @@ const db = require("../db");
 
 router.post(
   "/register",
-  body("email").isEmail(),
+  body("email").isEmail().normalizeEmail(),
   body("password").isLength({ min: 5 }),
-  body("display_name").isLength({ min: 3 }),
+  body("display_name").isLength({ min: 3 }).trim().escape(),
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
