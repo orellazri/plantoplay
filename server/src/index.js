@@ -2,23 +2,41 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const db = require("./db");
+const authRoutes = require("./routes/auth");
+
+// Set default environment variables
+process.env.NODE_ENV = process.env.NODE_ENV || "production";
+process.env.PORT = process.env.PORT || 8080;
+
 // Initialize Express
 const app = express();
 app.use(express.json());
 
 // CORS
 app.use(cors());
-app.options("*", cors());
+if (process.env.NODE_ENV != "production") {
+  app.options("*", cors());
+}
 
-// Set default environment variables
-process.env.NODE_ENV = process.env.NODE_ENV || "production";
-process.env.PORT = process.env.PORT || 8080;
+// Routes
+app.use("/auth", authRoutes);
+app.use("/", (req, res) => {
+  res.json({ message: "PlayToPlay API" });
+});
 
 // Error handling
 app.use((err, req, res, next) => {
+  console.log(err);
+
+  const message = err.message ? err.message : err;
   res.status(400).json({
-    error: process.env.NODE_ENV == "production" ? "An error occured" : err.message,
+    error: process.env.NODE_ENV == "production" ? "An error occured" : message,
   });
+});
+
+app.get("*", function (req, res) {
+  res.status(404).json({ error: "PPaNot found" });
 });
 
 app.listen(process.env.PORT, () => {
