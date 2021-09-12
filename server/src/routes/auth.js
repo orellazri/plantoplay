@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
+const { default: knex } = require("knex");
 
 const db = require("../db");
 
@@ -16,9 +17,12 @@ router.post(
         throw new Error("Invalid input");
       }
 
-      let { email, password, display_name: displayName } = req.body;
+      let { email, password, display_name } = req.body;
+
       const salt = await bcrypt.genSalt(10);
       password = await bcrypt.hash(password, salt);
+
+      await db("users").insert({ email, password, display_name, created_at: db.fn.now(), updated_at: db.fn.now() });
 
       res.json({ message: "Successfully registered." });
     } catch (err) {

@@ -28,9 +28,18 @@ app.use("/", (req, res) => {
 app.use((err, req, res, next) => {
   console.log(err);
 
-  const message = err.message ? err.message : err;
+  let message = err.message ? err.message : err;
+
+  // Pass through (and rephrase) some acceptable errors
+  if (process.env.NODE_ENV == "production") {
+    if (message.includes("users_email_unique")) {
+      message = "A user with that email already exists.";
+    } else {
+      message = "An error occured";
+    }
+  }
   res.status(400).json({
-    error: process.env.NODE_ENV == "production" ? "An error occured" : message,
+    error: message,
   });
 });
 
