@@ -6,7 +6,7 @@ function Navbar() {
     <div className="flex bg-gray-800 p-4 space-x">
       <div className="flex-1">
         <Link to="/">
-          <img src="logo-dpad.png" className="w-10" />
+          <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
         </Link>
       </div>
       <div className="flex-none">
