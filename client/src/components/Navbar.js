@@ -9,13 +9,11 @@ function Navbar() {
           <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
         </Link>
       </div>
-      <div className="flex-none">
-        <div className="flex flex-row space-x-4">
-          <Button to="/login">Login</Button>
-          <Button to="/register" outline>
-            Sign Up
-          </Button>
-        </div>
+      <div className="flex flex-row space-x-4">
+        <Button to="/login">Login</Button>
+        <Button to="/register" outline>
+          Sign Up
+        </Button>
       </div>
     </div>
   );
