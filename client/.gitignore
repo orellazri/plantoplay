@@ -2,6 +2,11 @@
 yarn-debug.log*
 yarn-error.log*
 
-node_modules
-*.log
+/node_modules
+/.pnp
+.pnp.js
+
+/coverage
+/build
+
 .env
