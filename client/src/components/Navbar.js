@@ -3,7 +3,7 @@ import Link from "./core/Link";
 
 function Navbar() {
   return (
-    <div className="flex bg-gray-800 p-4 space-x">
+    <div className="flex p-4 bg-gray-800 space-x">
       <div className="flex-1">
         <Link to="/">
           <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
