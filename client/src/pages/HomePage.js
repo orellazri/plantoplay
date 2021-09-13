@@ -1,9 +1,5 @@
-import React from "react";
-
-import Container from "../components/core/Container";
-
 function HomePage() {
-  return <Container>Homepage.</Container>;
+  return <>Homepage.</>;
 }
 
 export default HomePage;

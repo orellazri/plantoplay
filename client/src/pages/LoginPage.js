@@ -1,9 +1,5 @@
-import React from "react";
-
-import Container from "../components/core/Container";
-
 function LoginPage() {
-  return <Container>Login page.</Container>;
+  return <>Login page.</>;
 }
 
 export default LoginPage;

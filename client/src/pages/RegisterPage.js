@@ -1,7 +1,5 @@
-import Container from "../components/core/Container";
-
 function RegisterPage() {
-  return <Container>Register page.</Container>;
+  return <>Register page.</>;
 }
 
 export default RegisterPage;
