@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import Input from "../components/core/Input";
 import Button from "../components/core/Button";
+import Alert from "../components/core/Alert";
 
 function LoginPage() {
+  const history = useHistory();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +23,10 @@ function LoginPage() {
     try {
       const result = await axios.post("/auth/login", { email, password });
       const { token } = result.data;
-      console.log(token);
+
+      // TODO: Setup global state and store token
+
+      history.push("/");
     } catch (err) {
       console.log(err);
       setError("Invalid credentials.");
@@ -30,7 +36,7 @@ function LoginPage() {
   return (
     <form onSubmit={handleSubmit}>
       <div className="w-full max-w-md px-8 pt-6 pb-8 mx-auto bg-gray-700 rounded shadow-md">
-        {error && <div className="">{error}</div>}
+        {error && <Alert error>{error}</Alert>}
         <div className="mb-4">
           <label className="block mb-2 text-sm font-bold">Email Address</label>
           <Input type="email" value={email} required autoFocus onChange={(e) => setEmail(e.target.value)} />
