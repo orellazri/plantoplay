@@ -36,9 +36,9 @@ app.use((err, req, res, next) => {
 
   // Pass through (and rephrase) some acceptable errors
   if (process.env.NODE_ENV == "production") {
-    if (message.includes("users_email_unique")) {
-      message = "This email address is already in use.";
-    } else {
+    const messagesToPass = ["Email address already in use."];
+
+    if (!messagesToPass.includes(message)) {
       message = "An error occured";
     }
   }
