@@ -1,22 +1,75 @@
+import { useState } from "react";
+
 import Button from "./core/Button";
 import Link from "./core/Link";
 
 function Navbar() {
+  const [mobileMenuShown, setMobileMenuShown] = useState(false);
+
   return (
     <div className="p-4 bg-gray-800">
-      <div className="flex mx-auto space-x max-w-7xl">
-        <div className="flex-1 mx-auto">
-          <Link to="/">
-            <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
-          </Link>
-        </div>
-        <div className="flex flex-row space-x-4">
-          <Button to="/login">Login</Button>
-          <Button to="/register" outline>
-            Sign Up
-          </Button>
+      <div className="mx-auto max-w-7xl">
+        <div className="flex justify-between">
+          <div className="flex">
+            {/* Left navigation */}
+            <div>
+              {/* Logo */}
+              <Link to="/" onClick={() => setMobileMenuShown(false)}>
+                <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
+              </Link>
+              {/* Left navigation items */}
+            </div>
+          </div>
+
+          {/* Right navigation */}
+          <div className="items-center hidden space-x-3 md:flex">
+            <Button to="/login">Login</Button>
+            <Button to="/register" outline>
+              Sign Up
+            </Button>
+          </div>
+
+          {/* Mobile button */}
+          <div className="flex items-center md:hidden">
+            {!mobileMenuShown && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6 opacity-80"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="#ffffff"
+                onClick={() => setMobileMenuShown(true)}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+            {mobileMenuShown && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6 opacity-80"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="#ffffff"
+                onClick={() => setMobileMenuShown(false)}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileMenuShown && (
+        <div className="mt-5">
+          <Link to="/login" className="block py-2" onClick={() => setMobileMenuShown(false)}>
+            Login
+          </Link>
+          <Link to="/register" className="block py-2" onClick={() => setMobileMenuShown(false)}>
+            Sign Up
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
