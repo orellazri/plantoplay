@@ -55,7 +55,7 @@ router.post("/login", body("email").isEmail().normalizeEmail(), body("password")
     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
 
     res.cookie("token", token, { httpOnly: true });
-    res.json({ message: "Successfully logged in." });
+    res.json({ message: "Successfully logged in.", id: user.id, email: user.email, display_name: user.display_name });
   } catch (err) {
     next(err);
   }

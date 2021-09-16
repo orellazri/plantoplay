@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
+import { setLoggedIn, setUser } from "../slices/userSlice";
 import Input from "../components/core/Input";
 import Button from "../components/core/Button";
 import Alert from "../components/core/Alert";
@@ -32,8 +33,10 @@ function LoginPage() {
 
     try {
       const result = await axios.post("/auth/login", { email, password });
+      const { data } = result;
 
-      // TODO: Setup global state and store token
+      dispatch(setLoggedIn(true));
+      dispatch(setUser({ id: data.id, email: data.email, displayName: data.display_name }));
 
       history.push("/");
     } catch (err) {
