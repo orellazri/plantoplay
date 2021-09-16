@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
+import Alert from "./components/core/Alert";
 
 function App() {
   const store = useStore();
@@ -47,7 +48,7 @@ function App() {
   };
 
   const Loading = () => <></>;
-  const NotFound = () => <div>Not found!</div>;
+  const NotFound = () => <Alert error>Page not found.</Alert>;
 
   return (
     <Router>
