@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     loggedIn: false,
     user: {
+      id: -1,
       email: "",
       displayName: "",
     },
@@ -19,6 +20,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setLoggedIn } = userSlice.actions;
+export const { setLoggedIn, setUser } = userSlice.actions;
 
 export default userSlice.reducer;

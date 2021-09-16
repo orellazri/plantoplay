@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const router = require("express").Router();
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 
+const { authJwt } = require("../utils");
 const db = require("../db");
 
 router.post(
@@ -54,10 +54,16 @@ router.post("/login", body("email").isEmail().normalizeEmail(), body("password")
     // Sign a JWT
     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
 
-    res.json({ message: "Successfully logged in.", token });
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ message: "Successfully logged in." });
   } catch (err) {
     next(err);
   }
+});
+
+router.get("/verify", authJwt, (req, res) => {
+  const { id, email, display_name } = res.locals.user;
+  res.json({ message: "Token successfully verified.", id, email, display_name });
 });
 
 module.exports = router;

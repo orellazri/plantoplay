@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 import Input from "../components/core/Input";
@@ -7,10 +8,19 @@ import Button from "../components/core/Button";
 import Alert from "../components/core/Alert";
 
 function LoginPage() {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   const history = useHistory();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (user.loggedIn) {
+      history.push("/");
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +32,6 @@ function LoginPage() {
 
     try {
       const result = await axios.post("/auth/login", { email, password });
-      const { token } = result.data;
 
       // TODO: Setup global state and store token
 

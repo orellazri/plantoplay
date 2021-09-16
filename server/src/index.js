@@ -1,9 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const passport = require("passport");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const initializePassport = require("./config/passport");
 const authRoutes = require("./routes/auth");
 
 // Set default environment variables
@@ -17,10 +16,7 @@ app.use(cors());
 if (process.env.NODE_ENV != "production") {
   app.options("*", cors());
 }
-
-// Initialize passport
-initializePassport(passport);
-app.use(passport.initialize());
+app.use(cookieParser());
 
 // Routes
 app.use("/auth", authRoutes);
