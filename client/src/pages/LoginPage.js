@@ -21,7 +21,7 @@ function LoginPage() {
     if (user.loggedIn) {
       history.push("/");
     }
-  }, []);
+  }, [history, user.loggedIn]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +37,8 @@ function LoginPage() {
 
       dispatch(setLoggedIn(true));
       dispatch(setUser({ id: data.id, email: data.email, displayName: data.display_name }));
+
+      localStorage.setItem("tokenInCookies", true);
 
       history.push("/");
     } catch (err) {

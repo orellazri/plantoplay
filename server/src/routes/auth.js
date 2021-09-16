@@ -66,4 +66,9 @@ router.get("/verify", authJwt, (req, res) => {
   res.json({ message: "Token successfully verified.", id, email, display_name });
 });
 
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Successfully logged out." });
+});
+
 module.exports = router;

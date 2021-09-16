@@ -25,10 +25,10 @@ function App() {
       } catch (err) {}
     };
 
-    if (!user.loggedIn) {
+    if (!user.loggedIn && localStorage.getItem("tokenInCookies")) {
       tryLoginJwt();
     }
-  }, []);
+  }, [dispatch, user.loggedIn]);
 
   return (
     <Router>

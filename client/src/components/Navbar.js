@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 import Button from "./core/Button";
@@ -6,18 +7,26 @@ import Link from "./core/Link";
 function Navbar() {
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      await axios.get("/auth/logout");
+      localStorage.removeItem("tokenInCookies");
+    } catch (err) {}
+  };
+
   return (
     <div className="p-4 bg-gray-800">
       <div className="mx-auto max-w-7xl">
         <div className="flex justify-between">
           <div className="flex">
             {/* Left navigation */}
-            <div>
+            <div className="flex space-x-3">
               {/* Logo */}
               <Link to="/" onClick={() => setMobileMenuShown(false)}>
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
               </Link>
               {/* Left navigation items */}
+              <button onClick={handleLogout}>logout(temp)</button>
             </div>
           </div>
 
