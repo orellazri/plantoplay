@@ -10,7 +10,6 @@ import { setLoggedIn, setUser } from "../slices/userSlice";
 function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
   const history = useHistory();
 
   const [mobileMenuShown, setMobileMenuShown] = useState(false);

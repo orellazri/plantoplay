@@ -40,12 +40,13 @@ function App() {
       next.redirect("/login");
     }
     if (to.meta.guestOnly && store.getState().user.loggedIn) {
-      next.redirect("/");
+      console.log("Guest only!");
+      next.redirect("/dashboard");
     }
     next();
   };
 
-  const Loading = () => <div>Loading...</div>;
+  const Loading = () => <></>;
   const NotFound = () => <div>Not found!</div>;
 
   return (
@@ -58,7 +59,7 @@ function App() {
             <GuardedRoute path="/login" exact component={LoginPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/register" exact component={RegisterPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/dashboard" exact component={DashboardPage} meta={{ authOnly: true }} />
-            <GuardedRoute path="/" exact component={HomePage} />
+            <GuardedRoute path="/" exact component={HomePage} meta={{ guestOnly: true }} />
             <GuardedRoute path="*" component={NotFound} />
           </Switch>
         </Container>

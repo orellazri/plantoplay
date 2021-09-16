@@ -10,8 +10,8 @@ import Alert from "../components/core/Alert";
 
 function LoginPage() {
   const dispatch = useDispatch();
-
   const history = useHistory();
+
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
