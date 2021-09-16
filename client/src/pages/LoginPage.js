@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 import { setLoggedIn, setUser } from "../slices/userSlice";
@@ -9,19 +9,12 @@ import Button from "../components/core/Button";
 import Alert from "../components/core/Alert";
 
 function LoginPage() {
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const history = useHistory();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    if (user.loggedIn) {
-      history.push("/");
-    }
-  }, [history, user.loggedIn]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +33,7 @@ function LoginPage() {
 
       localStorage.setItem("tokenInCookies", true);
 
-      history.push("/");
+      history.push("/dashboard");
     } catch (err) {
       console.log(err);
       setError("Invalid credentials.");

@@ -1,16 +1,27 @@
-import axios from "axios";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 import Button from "./core/Button";
 import Link from "./core/Link";
+import { setLoggedIn, setUser } from "../slices/userSlice";
 
 function Navbar() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const history = useHistory();
+
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
 
   const handleLogout = async () => {
     try {
       await axios.get("/auth/logout");
       localStorage.removeItem("tokenInCookies");
+      dispatch(setLoggedIn(false));
+      dispatch(setUser({ id: -1, email: "", displayName: "" }));
+      history.push("/");
     } catch (err) {}
   };
 
@@ -20,23 +31,33 @@ function Navbar() {
         <div className="flex justify-between">
           <div className="flex">
             {/* Left navigation */}
-            <div className="flex space-x-3">
+            <div className="flex items-center space-x-3">
               {/* Logo */}
               <Link to="/" onClick={() => setMobileMenuShown(false)}>
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
               </Link>
               {/* Left navigation items */}
               <button onClick={handleLogout}>logout(temp)</button>
+              <Link to="/dashboard">Dashboard</Link>
             </div>
           </div>
 
           {/* Right navigation */}
-          <div className="items-center hidden space-x-3 md:flex">
-            <Button to="/login">Login</Button>
-            <Button to="/register" outline>
-              Sign Up
-            </Button>
-          </div>
+          {!user.loggedIn && (
+            <div className="items-center hidden space-x-3 md:flex">
+              <Button to="/login">Login</Button>
+              <Button to="/register" outline>
+                Sign Up
+              </Button>
+            </div>
+          )}
+          {user.loggedIn && (
+            <div className="items-center hidden space-x-3 md:flex">
+              <Button onClick={handleLogout} outline>
+                Logout
+              </Button>
+            </div>
+          )}
 
           {/* Mobile button */}
           <div className="flex items-center md:hidden">
