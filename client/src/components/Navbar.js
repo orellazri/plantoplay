@@ -37,7 +37,6 @@ function Navbar() {
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
               </Link>
               {/* Left navigation items */}
-              <button onClick={handleLogout}>logout(temp)</button>
               <Link to="/dashboard">Dashboard</Link>
             </div>
           </div>
@@ -90,13 +89,20 @@ function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {mobileMenuShown && (
+      {mobileMenuShown && !user.loggedIn && (
         <div className="mt-5">
           <Link to="/login" className="block py-2" onClick={() => setMobileMenuShown(false)}>
             Login
           </Link>
           <Link to="/register" className="block py-2" onClick={() => setMobileMenuShown(false)}>
             Sign Up
+          </Link>
+        </div>
+      )}
+      {mobileMenuShown && user.loggedIn && (
+        <div className="mt-5">
+          <Link to="" className="block py-2" onClick={handleLogout}>
+            Logout
           </Link>
         </div>
       )}
