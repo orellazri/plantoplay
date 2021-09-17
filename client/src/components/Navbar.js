@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Button from "./core/Button";
 import Link from "./core/Link";
+import Dropdown from "../components/core/Dropdown";
 import { logout } from "../utils";
 
 function Navbar() {
@@ -27,7 +28,9 @@ function Navbar() {
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
               </Link>
               {/* Left navigation items */}
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard" primary>
+                Dashboard
+              </Link>
             </div>
           </div>
 
@@ -42,9 +45,10 @@ function Navbar() {
           )}
           {user.loggedIn && (
             <div className="items-center hidden space-x-3 md:flex">
-              <Button onClick={handleLogout} outline>
+              {/* <Button onClick={handleLogout} outline>
                 Logout
-              </Button>
+              </Button> */}
+              <Dropdown title={user.user.displayName} items={[{ name: "Sign out", to: "", onClick: handleLogout }]} />
             </div>
           )}
 
@@ -81,18 +85,18 @@ function Navbar() {
       {/* Mobile menu */}
       {mobileMenuShown && !user.loggedIn && (
         <div className="mt-5">
-          <Link to="/login" className="block py-2" onClick={() => setMobileMenuShown(false)}>
+          <Link to="/login" primary className="block py-2" onClick={() => setMobileMenuShown(false)}>
             Login
           </Link>
-          <Link to="/register" className="block py-2" onClick={() => setMobileMenuShown(false)}>
+          <Link to="/register" primary className="block py-2" onClick={() => setMobileMenuShown(false)}>
             Sign Up
           </Link>
         </div>
       )}
       {mobileMenuShown && user.loggedIn && (
         <div className="mt-5">
-          <Link to="" className="block py-2" onClick={handleLogout}>
-            Logout
+          <Link to="" primary className="block py-2" onClick={handleLogout}>
+            Sign out
           </Link>
         </div>
       )}

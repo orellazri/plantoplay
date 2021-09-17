@@ -1,8 +1,10 @@
 import { Link as RouterLink } from "react-router-dom";
 
-function Link({ to, className, onClick, children }) {
+function Link({ to, primary, className, onClick, children }) {
+  className += primary ? " text-purple-500" : "";
+
   return (
-    <RouterLink to={to} className={`text-purple-500 ${className}`} onClick={onClick}>
+    <RouterLink to={to} className={`${className}`} onClick={onClick}>
       {children}
     </RouterLink>
   );
