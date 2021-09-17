@@ -5,7 +5,7 @@ import { logout } from "../utils";
 import Button from "./core/Button";
 import Link from "./core/Link";
 import Dropdown from "../components/core/Dropdown";
-import Input from "../components/core/Input";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -29,21 +29,8 @@ function Navbar() {
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
               </Link>
               {/* Left navigation items */}
-              <div className="relative w-full">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                  <button type="submit" className="p-1 focus:outline-none focus:shadow-outline">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#bbbbbb">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </button>
-                </span>
-                <Input className="px-10 rounded-lg" placeholder="Search a game..." />
-              </div>
+              {/* Search */}
+              {user.loggedIn && <SearchBar />}
             </div>
           </div>
 

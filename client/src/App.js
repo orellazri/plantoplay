@@ -6,13 +6,14 @@ import axios from "axios";
 
 import { setLoggedIn, setUser } from "./slices/userSlice";
 import { logout } from "./utils";
+import Alert from "./components/core/Alert";
 import Container from "./components/core/Container";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
-import Alert from "./components/core/Alert";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ function App() {
             <GuardedRoute path="/login" exact component={LoginPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/register" exact component={RegisterPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/dashboard" exact component={DashboardPage} meta={{ authOnly: true }} />
+            <GuardedRoute path="/search/:title" exact component={SearchPage} meta={{ authOnly: true }} />
             <GuardedRoute path="/" exact component={HomePage} meta={{ guestOnly: true }} />
             <GuardedRoute path="*" component={NotFound} />
           </Switch>
