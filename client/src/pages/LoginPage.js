@@ -46,11 +46,18 @@ function LoginPage() {
         {error && <Alert error>{error}</Alert>}
         <div className="mb-4">
           <label className="block mb-2 text-sm font-bold">Email Address</label>
-          <Input type="email" value={email} required autoFocus onChange={(e) => setEmail(e.target.value)} />
+          <Input type="email" value={email} name="email" required autoFocus onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-sm font-bold">Password</label>
-          <Input type="password" value={password} minLength={5} required onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            type="password"
+            value={password}
+            name="password"
+            minLength={5}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <div className="flex">
           <div className="w-auto">

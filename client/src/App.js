@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import axios from "axios";
 
 import { setLoggedIn, setUser } from "./slices/userSlice";
+import { logout } from "./utils";
 import Container from "./components/core/Container";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -14,7 +15,6 @@ import DashboardPage from "./pages/DashboardPage";
 import Alert from "./components/core/Alert";
 
 function App() {
-  const store = useStore();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -27,7 +27,9 @@ function App() {
 
         dispatch(setLoggedIn(true));
         dispatch(setUser({ id, email, displayName }));
-      } catch (err) {}
+      } catch (err) {
+        await logout(dispatch);
+      }
     };
 
     if (!user.loggedIn && localStorage.getItem("tokenInCookies")) {
@@ -37,11 +39,10 @@ function App() {
 
   // Middleware for authentication
   const authMiddleware = (to, from, next) => {
-    if (to.meta.authOnly && !store.getState().user.loggedIn) {
+    if (to.meta.authOnly && !localStorage.getItem("tokenInCookies")) {
       next.redirect("/login");
     }
-    if (to.meta.guestOnly && store.getState().user.loggedIn) {
-      console.log("Guest only!");
+    if (to.meta.guestOnly && localStorage.getItem("tokenInCookies")) {
       next.redirect("/dashboard");
     }
     next();

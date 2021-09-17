@@ -1,27 +1,18 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import axios from "axios";
 
 import Button from "./core/Button";
 import Link from "./core/Link";
-import { setLoggedIn, setUser } from "../slices/userSlice";
+import { logout } from "../utils";
 
 function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const history = useHistory();
 
   const [mobileMenuShown, setMobileMenuShown] = useState(false);
 
   const handleLogout = async () => {
-    try {
-      await axios.get("/auth/logout");
-      localStorage.removeItem("tokenInCookies");
-      dispatch(setLoggedIn(false));
-      dispatch(setUser({ id: -1, email: "", displayName: "" }));
-      history.push("/");
-    } catch (err) {}
+    await logout(dispatch);
   };
 
   return (
