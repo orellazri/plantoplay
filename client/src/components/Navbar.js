@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { logout } from "../utils";
 import Button from "./core/Button";
 import Link from "./core/Link";
 import Dropdown from "../components/core/Dropdown";
-import { logout } from "../utils";
+import Input from "../components/core/Input";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -20,17 +21,29 @@ function Navbar() {
     <div className="p-4 bg-gray-800">
       <div className="mx-auto max-w-7xl">
         <div className="flex justify-between">
-          <div className="flex">
-            {/* Left navigation */}
-            <div className="flex items-center space-x-3">
+          {/* Left navigation */}
+          <div className="flex md:w-1/2">
+            <div className="flex items-center w-full space-x-4 md:space-x-8">
               {/* Logo */}
               <Link to="/" onClick={() => setMobileMenuShown(false)}>
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
               </Link>
               {/* Left navigation items */}
-              <Link to="/dashboard" primary>
-                Dashboard
-              </Link>
+              <div className="relative w-full">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <button type="submit" className="p-1 focus:outline-none focus:shadow-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#bbbbbb">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </button>
+                </span>
+                <Input className="px-10 rounded-lg" placeholder="Search a game..." />
+              </div>
             </div>
           </div>
 
@@ -45,9 +58,6 @@ function Navbar() {
           )}
           {user.loggedIn && (
             <div className="items-center hidden space-x-3 md:flex">
-              {/* <Button onClick={handleLogout} outline>
-                Logout
-              </Button> */}
               <Dropdown title={user.user.displayName} items={[{ name: "Sign out", to: "", onClick: handleLogout }]} />
             </div>
           )}
