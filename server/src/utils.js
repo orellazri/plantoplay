@@ -21,6 +21,7 @@ const authJwt = (req, res, next) => {
   return next();
 };
 
+// Get twitch access token from memory or twitch
 const getTwitchAccessToken = async () => {
   try {
     // Check if there is an access token already

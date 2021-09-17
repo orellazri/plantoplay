@@ -21,7 +21,7 @@ const fetchTwitchApi = async (path, query) => {
 router.get("/search/:name", authJwt, async (req, res) => {
   const { name } = req.params;
 
-  const data = await fetchTwitchApi("games", "fields *;");
+  const data = await fetchTwitchApi("games", `search "${name}"; fields name,slug,cover.url; limit 10;`);
 
   res.json(data);
 });
