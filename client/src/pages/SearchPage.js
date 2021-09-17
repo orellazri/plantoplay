@@ -46,7 +46,7 @@ function SearchPage({ match }) {
                     })`,
                   }}
                 >
-                  <div className="absolute w-full text-lg font-bold bottom-5">{result.name}</div>
+                  <div className="absolute w-full px-1 text-lg font-bold bottom-5">{result.name}</div>
                 </div>
               </Link>
             ))}
