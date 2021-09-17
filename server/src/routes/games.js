@@ -23,7 +23,11 @@ router.get("/search/:name", authJwt, async (req, res) => {
 
   const data = await fetchTwitchApi("games", `search "${name}"; fields name,slug,cover.url; limit 10;`);
 
-  res.json(data);
+  // Replace cover image size
+  let dataAsStr = JSON.stringify(data);
+  dataAsStr = dataAsStr.replaceAll("t_thumb", "t_cover_big");
+
+  res.json(JSON.parse(dataAsStr));
 });
 
 module.exports = router;
