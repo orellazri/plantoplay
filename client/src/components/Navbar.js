@@ -23,7 +23,7 @@ function Navbar() {
         <div className="flex justify-between">
           {/* Left navigation */}
           <div className="flex md:w-1/2">
-            <div className="flex items-center w-full space-x-4 md:space-x-8">
+            <div className="flex items-center w-full space-x-4 sm:space-x-8">
               {/* Logo */}
               <Link to="/" onClick={() => setMobileMenuShown(false)}>
                 <img src="logo-dpad.png" className="w-10" alt="Plan to Play Logo" />
