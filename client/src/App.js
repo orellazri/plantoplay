@@ -62,7 +62,7 @@ function App() {
             <GuardedRoute path="/login" exact component={LoginPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/register" exact component={RegisterPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/dashboard" exact component={DashboardPage} meta={{ authOnly: true }} />
-            <GuardedRoute path="/search/:title" exact component={SearchPage} meta={{ authOnly: true }} />
+            <GuardedRoute path="/search/:name" exact component={SearchPage} meta={{ authOnly: true }} />
             <GuardedRoute path="/" exact component={HomePage} meta={{ guestOnly: true }} />
             <GuardedRoute path="*" component={NotFound} />
           </Switch>

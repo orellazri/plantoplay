@@ -11,7 +11,6 @@ function SearchBar() {
   const handleSearch = (e) => {
     e.preventDefault();
 
-    console.log("Search for " + searchText);
     setSearchText("");
     history.push("/search/" + searchText);
   };
