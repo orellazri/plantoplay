@@ -45,7 +45,7 @@ router.get("/game/:slug", authJwt, async (req, res, next) => {
     let dataAsStr = JSON.stringify(data);
     dataAsStr = dataAsStr.replaceAll("t_thumb", "t_cover_big");
 
-    res.json(JSON.parse(dataAsStr));
+    res.json(JSON.parse(dataAsStr)[0]);
   } catch (err) {
     next(err);
   }

@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import SearchPage from "./pages/SearchPage";
+import GameDetailsPage from "./pages/GameDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function App() {
             <GuardedRoute path="/register" exact component={RegisterPage} meta={{ guestOnly: true }} />
             <GuardedRoute path="/dashboard" exact component={DashboardPage} meta={{ authOnly: true }} />
             <GuardedRoute path="/search/:name" exact component={SearchPage} meta={{ authOnly: true }} />
+            <GuardedRoute path="/game/:slug" exact component={GameDetailsPage} meta={{ authOnly: true }} />
             <GuardedRoute path="/" exact component={HomePage} meta={{ guestOnly: true }} />
             <GuardedRoute path="*" component={NotFound} />
           </Switch>
