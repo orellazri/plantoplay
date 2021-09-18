@@ -4,6 +4,18 @@ const { body, validationResult } = require("express-validator");
 const { authJwt } = require("../utils");
 const db = require("../db");
 
+// Get the user's games and lists details
+router.get("/get-games", authJwt, async (req, res, next) => {
+  try {
+    const { id: user_id } = res.locals.user;
+
+    const games = await db("users_games").where({ user_id });
+    res.json({ data: games });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Add a game to the user's list or update its list if its already in the database
 router.post(
   "/add-game-to-list",
