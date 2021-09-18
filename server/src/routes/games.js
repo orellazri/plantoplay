@@ -22,7 +22,7 @@ const fetchTwitchApi = async (path, query, next) => {
 router.get("/search/:name", authJwt, async (req, res, next) => {
   try {
     const { name } = req.params;
-    const data = await fetchTwitchApi("games", `search "${name}"; fields name,slug,cover.url; limit 10;`, next);
+    const data = await fetchTwitchApi("games", `search "${name}"; fields name,slug,cover.url; limit 20;`, next);
 
     // Replace cover image size
     let dataAsStr = JSON.stringify(data);
