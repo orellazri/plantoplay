@@ -4,18 +4,6 @@ const { body, validationResult } = require("express-validator");
 const { authJwt } = require("../utils");
 const db = require("../db");
 
-// Get the user's games and lists details
-router.get("/games", authJwt, async (req, res, next) => {
-  try {
-    const { id: user_id } = res.locals.user;
-
-    const games = await db("users_games").where({ user_id });
-    res.json({ data: games });
-  } catch (err) {
-    next(err);
-  }
-});
-
 // Get details for a game in the user's lists
 router.get("/game/:id", authJwt, async (req, res, next) => {
   try {
@@ -28,6 +16,18 @@ router.get("/game/:id", authJwt, async (req, res, next) => {
     }
 
     res.json({ data: game });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Get the user's games and lists details
+router.get("/games", authJwt, async (req, res, next) => {
+  try {
+    const { id: user_id } = res.locals.user;
+
+    const games = await db("users_games").where({ user_id });
+    res.json({ data: games });
   } catch (err) {
     next(err);
   }
@@ -70,5 +70,24 @@ router.post(
     }
   }
 );
+
+// Delete a game from the user's lists
+router.delete("/games", authJwt, body("game_id").notEmpty(), async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new Error("Invalid input");
+    }
+
+    const { game_id } = req.body;
+    const { id: user_id } = res.locals.user;
+
+    await db("users_games").where({ user_id, game_id }).del();
+
+    res.json({ message: "Successfully deleted the game from the user's list." });
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

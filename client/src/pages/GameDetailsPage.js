@@ -55,8 +55,15 @@ function GameDetailsPage({ match }) {
         return;
       }
 
-      await axios.post("/user/games", { game_id: game.id, list });
+      // Check if the chosen list is the same as the game's list to delete it
+      if (game.user && game.user.list && list === game.user.list) {
+        setGame({ ...game, user: {} });
+        await axios.delete("/user/games", { data: { game_id: game.id } });
+        return;
+      }
+
       setGame({ ...game, user: { ...game.user, list } });
+      await axios.post("/user/games", { game_id: game.id, list });
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +81,7 @@ function GameDetailsPage({ match }) {
           {error && <Alert error>{error}</Alert>}
           {!error && (
             <div className="px-5">
-              <div className="flex flex-col items-center md:flex-row">
+              <div className="relative flex flex-col items-center md:items-start md:flex-row">
                 {/* Left column (game image) */}
                 <div>
                   <div
@@ -95,7 +102,7 @@ function GameDetailsPage({ match }) {
                     <p>{game.summary}</p>
                   </div>
                   {/* Genres */}
-                  <div className="flex items-center mt-5 space-x-3">
+                  <div className="flex items-center mt-10 space-x-3">
                     {game.genres &&
                       game.genres.map((genre, i) => (
                         <div className="px-3 py-2 font-semibold bg-gray-700 rounded-full" key={i}>
@@ -104,18 +111,19 @@ function GameDetailsPage({ match }) {
                       ))}
                   </div>
                   {/* List */}
-                  <div className="flex mt-5 space-x-3 md:mt-10 lg:mt-20">
-                    {availableLists.map((list, i) => (
-                      <div key={i}>
-                        {game.user && game.user.list && game.user.list === list.value ? (
-                          <div className="px-3 py-2 font-bold bg-purple-800 rounded-full">{list.name}</div>
-                        ) : (
-                          <Link to="#" onClick={() => handleSelectList(list.value)}>
-                            <div className="px-3 py-2 font-semibold bg-purple-400 rounded-full">{list.name}</div>
-                          </Link>
-                        )}
-                      </div>
-                    ))}
+                  <div className="flex flex-col mt-5 md:absolute md:mt-0 md:bottom-0">
+                    <span className="mb-3 text-xl font-light">Play Status:</span>
+                    <div className="flex space-x-3 ">
+                      {availableLists.map((list, i) => (
+                        <Link key={i} to="#" onClick={() => handleSelectList(list.value)}>
+                          {game.user && game.user.list && game.user.list === list.value ? (
+                            <div className="px-3 py-2 font-bold bg-pink-800 rounded-lg">{list.name}</div>
+                          ) : (
+                            <div className="px-3 py-2 font-semibold bg-purple-500 rounded-lg">{list.name}</div>
+                          )}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
