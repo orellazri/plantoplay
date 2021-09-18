@@ -21,8 +21,8 @@ router.post(
       let { email, password, display_name } = req.body;
 
       // Check if a user exists with this email
-      const user = await db("users").where({ email }).first();
-      if (user) {
+      const userInDb = await db("users").where({ email }).first();
+      if (userInDb) {
         throw new Error("Email address already in use.");
       }
 
@@ -31,9 +31,16 @@ router.post(
       password = await bcrypt.hash(password, salt);
 
       // Create user in database
-      await db("users").insert({ email, password, display_name, created_at: db.fn.now(), updated_at: db.fn.now() });
+      const id = await db("users")
+        .insert({ email, password, display_name, created_at: db.fn.now(), updated_at: db.fn.now() })
+        .returning("id");
 
-      res.json({ message: "Successfully registered." });
+      // Sign a JWT
+      const user = { id, email, display_name };
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
+
+      res.cookie("token", token, { httpOnly: true });
+      res.json({ message: "Successfully registered.", id: user.id, email: user.email, display_name: user.display_name });
     } catch (err) {
       next(err);
     }
