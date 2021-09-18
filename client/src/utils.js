@@ -13,4 +13,13 @@ const logout = async (dispatch) => {
   }
 };
 
-export { logout };
+const availableLists = () => {
+  return [
+    { name: "Plan to Play", value: "plantoplay" },
+    { name: "Playing", value: "playing" },
+    { name: "Finished", value: "finished" },
+    { name: "Dropped", value: "dropped" },
+  ];
+};
+
+export { logout, availableLists };

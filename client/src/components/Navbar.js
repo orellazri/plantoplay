@@ -92,7 +92,7 @@ function Navbar() {
       )}
       {mobileMenuShown && user.loggedIn && (
         <div className="mt-5">
-          <Link to="" primary className="block py-2" onClick={handleLogout}>
+          <Link to="#" primary className="block py-2" onClick={handleLogout}>
             Sign out
           </Link>
         </div>

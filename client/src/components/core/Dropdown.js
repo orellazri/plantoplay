@@ -40,12 +40,6 @@ function Dropdown({ title, items }) {
                   {item.name}
                 </Link>
               ))}
-              {/* <Link to="" className="flex justify-between w-full px-4 py-2 text-sm text-left text-gray-100 hover:bg-gray-500">
-                Profile
-              </Link>
-              <Link to="" className="flex justify-between w-full px-4 py-2 text-sm text-left text-gray-100 hover:bg-gray-500">
-                Sign out
-              </Link> */}
             </div>
           </div>
         </div>
