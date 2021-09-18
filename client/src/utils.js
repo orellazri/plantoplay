@@ -1,6 +1,15 @@
 import axios from "axios";
 import { setLoggedIn, setUser } from "./slices/userSlice";
 
+// Available lists for games
+const availableLists = [
+  { name: "Plan to Play", value: "plantoplay" },
+  { name: "Playing", value: "playing" },
+  { name: "Finished", value: "finished" },
+  { name: "Dropped", value: "dropped" },
+];
+
+// Log a user out
 const logout = async (dispatch) => {
   try {
     await axios.get("/auth/logout");
@@ -11,15 +20,6 @@ const logout = async (dispatch) => {
     dispatch(setUser({ id: -1, email: "", displayName: "" }));
     window.location = "/";
   }
-};
-
-const availableLists = () => {
-  return [
-    { name: "Plan to Play", value: "plantoplay" },
-    { name: "Playing", value: "playing" },
-    { name: "Finished", value: "finished" },
-    { name: "Dropped", value: "dropped" },
-  ];
 };
 
 export { logout, availableLists };
