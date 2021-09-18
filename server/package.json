@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "PlanToPlay backend server",
   "main": "src/index.js",
+  "author": "Orel Lazri",
+  "license": "UNLICENSED",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
-  "author": "Orel Lazri",
   "devDependencies": {
     "nodemon": "^2.0.12"
   },
