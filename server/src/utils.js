@@ -5,6 +5,7 @@ let currentAccessToken = {};
 let lastAccessTokenTime = 0;
 
 // Middleware to verify the jwt token in the request cookie
+// Sets the user obejct in res.locals
 const authJwt = (req, res, next) => {
   if (!req.cookies.token) {
     return res.status(401).send("Unauthorized");
@@ -49,4 +50,19 @@ const getTwitchAccessToken = async () => {
   }
 };
 
-module.exports = { authJwt, getTwitchAccessToken };
+// Fetch from the igdb api
+const fetchIGDBApi = async (path, query, next) => {
+  try {
+    const token = await getTwitchAccessToken();
+
+    const { data } = await axios.post(`https://api.igdb.com/v4/${path}`, query, {
+      headers: { "Client-ID": process.env.IGDB_CLIENT_ID, Authorization: `Bearer ${token}` },
+    });
+
+    return data;
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { authJwt, getTwitchAccessToken, fetchIGDBApi };

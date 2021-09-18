@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
 const gamesRoutes = require("./routes/games");
+const userRoutes = require("./routes/user");
 
 // Set default environment variables
 process.env.NODE_ENV = process.env.NODE_ENV || "production";
@@ -22,7 +23,8 @@ app.use(cookieParser());
 // Routes
 app.use("/auth", authRoutes);
 app.use("/games", gamesRoutes);
-app.use("/", (req, res) => {
+app.use("/user", userRoutes);
+app.use("/", (_req, res) => {
   res.json({ message: "Plan to Play API" });
 });
 

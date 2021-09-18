@@ -66,12 +66,14 @@ router.post("/login", body("email").isEmail().normalizeEmail(), body("password")
   }
 });
 
-router.get("/verify", authJwt, (req, res) => {
+// Verify the user's jwt from the request cookie
+router.get("/verify", authJwt, (_req, res) => {
   const { id, email, display_name } = res.locals.user;
   res.json({ message: "Token successfully verified.", id, email, display_name });
 });
 
-router.get("/logout", (req, res) => {
+// Logout the user
+router.get("/logout", (_req, res) => {
   res.clearCookie("token");
   res.json({ message: "Successfully logged out." });
 });
