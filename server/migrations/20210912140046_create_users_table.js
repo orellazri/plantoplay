@@ -4,7 +4,7 @@ exports.up = function (knex) {
     t.string("email", 80).notNullable().unique();
     t.string("password", 255).notNullable();
     t.string("display_name", 30).notNullable();
-    t.timestamps();
+    t.timestamps(true, true);
   });
 };
 

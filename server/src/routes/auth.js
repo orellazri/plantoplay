@@ -31,12 +31,10 @@ router.post(
       password = await bcrypt.hash(password, salt);
 
       // Create user in database
-      const id = await db("users")
-        .insert({ email, password, display_name, created_at: db.fn.now(), updated_at: db.fn.now() })
-        .returning("id");
+      const id = await db("users").insert({ email, password, display_name }).returning("id");
 
       // Sign a JWT
-      const user = { id, email, display_name };
+      const user = { id: id[0], email, display_name };
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
 
       res.cookie("token", token, { httpOnly: true });
