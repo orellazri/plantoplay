@@ -24,27 +24,6 @@ function GameDetailsPage({ match }) {
       }
     };
 
-    // // TODO: temporary
-    // setGame({
-    //   id: 28204,
-    //   cover: {
-    //     id: 82135,
-    //     url: "//images.igdb.com/igdb/image/upload/t_cover_big/co1rdj.jpg",
-    //   },
-    //   genres: [
-    //     { id: 5, name: "Shooter" },
-    //     { id: 6, name: "RPG" },
-    //   ],
-    //   name: "Call of Duty: WWII",
-    //   summary:
-    //     "Call of Duty: WWII creates the definitive World War II next generation experience across three different game modes: Campaign, Multiplayer, and Co-Operative. Featuring stunning visuals, the Campaign transports players to the European theater as they engage in an all-new Call of Duty story set in iconic World War II battles. Multiplayer marks a return to original, boots-on-the ground Call of Duty gameplay. Authentic weapons and traditional run-and-gun action immerse you in a vast array of World War II-themed locations. The Co-Operative mode unleashes a new and original story in a standalone game experience full of unexpected, adrenaline-pumping moments.",
-    //   user: {
-    //     list: "playing",
-    //   },
-    // });
-    // setLoading(false);
-    // // ---- END temporary
-
     fetchGame();
   }, [match.params.slug]);
 
@@ -105,7 +84,7 @@ function GameDetailsPage({ match }) {
                   <div className="flex items-center mt-10 space-x-3">
                     {game.genres &&
                       game.genres.map((genre, i) => (
-                        <div className="px-3 py-2 font-semibold bg-gray-700 rounded-full" key={i}>
+                        <div className="px-4 py-2 font-semibold bg-gray-700 rounded-full" key={i}>
                           {genre.name}
                         </div>
                       ))}
@@ -113,14 +92,37 @@ function GameDetailsPage({ match }) {
                   {/* List */}
                   <div className="flex flex-col mt-5 md:absolute md:mt-0 md:bottom-0">
                     <span className="mb-3 text-xl font-light">Play Status:</span>
-                    <div className="flex space-x-3 ">
+                    <div className="flex items-center space-x-3">
                       {availableLists.map((list, i) => (
                         <Link key={i} to="#" onClick={() => handleSelectList(list.value)}>
-                          {game.user && game.user.list && game.user.list === list.value ? (
-                            <div className="px-3 py-2 font-bold bg-pink-800 rounded-lg">{list.name}</div>
-                          ) : (
-                            <div className="px-3 py-2 font-semibold bg-purple-500 rounded-lg">{list.name}</div>
-                          )}
+                          <div
+                            className={
+                              `flex px-3 py-2 font-semibold rounded-md hover:opacity-90 ` +
+                              (game.user && game.user.list && game.user.list === list.value && ` font-bold`)
+                            }
+                            style={{ backgroundImage: `linear-gradient(to bottom, ${list.colors[0]}, ${list.colors[1]})` }}
+                          >
+                            {/* List check icon */}
+                            {game.user && game.user.list && game.user.list === list.value && (
+                              <div className="pr-2">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="w-6 h-6"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                              </div>
+                            )}
+                            <span className="filter drop-shadow-md">{list.name}</span>
+                          </div>
                         </Link>
                       ))}
                     </div>
