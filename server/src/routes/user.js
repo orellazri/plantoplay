@@ -5,7 +5,7 @@ const { authJwt } = require("../utils");
 const db = require("../db");
 
 // Get the user's games and lists details
-router.get("/get-games", authJwt, async (req, res, next) => {
+router.get("/games", authJwt, async (req, res, next) => {
   try {
     const { id: user_id } = res.locals.user;
 
@@ -16,9 +16,26 @@ router.get("/get-games", authJwt, async (req, res, next) => {
   }
 });
 
+// Get details for a game in the user's lists
+router.get("/game/:id", authJwt, async (req, res, next) => {
+  try {
+    const { id: user_id } = res.locals.user;
+    const { id: game_id } = req.params;
+
+    const game = await db("users_games").where({ user_id, game_id });
+    if (game.length == 0) {
+      throw new Error("Game not found.");
+    }
+
+    res.json({ data: game });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Add a game to the user's list or update its list if its already in the database
 router.post(
-  "/add-game-to-list",
+  "/games",
   authJwt,
   body("game_id").notEmpty(),
   body("list").notEmpty().isIn(["playing", "finished", "plantoplay", "dropped"]),
