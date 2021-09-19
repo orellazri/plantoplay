@@ -37,7 +37,9 @@ router.post(
       const user = { id: id[0], email, display_name };
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
 
-      res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 10 * 365 * 24 * 60 * 60 });
+      // Send a cookie that expires in ~1 month
+      res.cookie("token", token, { httpOnly: true, maxAge: 90 * 365 * 24 * 60 * 60 });
+
       res.json({ message: "Successfully registered.", id: user.id, email: user.email, display_name: user.display_name });
     } catch (err) {
       next(err);
@@ -59,7 +61,9 @@ router.post("/login", body("email").isEmail().normalizeEmail(), body("password")
     // Sign a JWT
     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET /*{ expiresIn: "30m" }*/);
 
-    res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 10 * 365 * 24 * 60 * 60 });
+    // Send a cookie that expires in ~1 month
+    res.cookie("token", token, { httpOnly: true, maxAge: 90 * 365 * 24 * 60 * 60 });
+
     res.json({ message: "Successfully logged in.", id: user.id, email: user.email, display_name: user.display_name });
   } catch (err) {
     next(err);
