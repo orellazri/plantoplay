@@ -30,7 +30,12 @@ router.get("/games", authJwt, async (req, res, next) => {
 
     // Fetch igdb to get details about the games the user has
     const listOfGameIds = data.map((game, i) => game.game_id).join(",");
-    const gamesInfo = await fetchIGDBApi("games", `fields name,slug,cover.url; where id = (${listOfGameIds});`, next);
+    let gamesInfo = await fetchIGDBApi("games", `fields name,slug,cover.url; where id = (${listOfGameIds});`, next);
+
+    // Replace cover urls with higher quality ones
+    let gamesInfoAsStr = JSON.stringify(gamesInfo);
+    gamesInfoAsStr = gamesInfoAsStr.replaceAll("t_thumb", "t_cover_big");
+    gamesInfo = JSON.parse(gamesInfoAsStr);
 
     // Add info from the igdb result to the response
     for (game of data) {

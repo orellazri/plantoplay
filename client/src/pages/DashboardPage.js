@@ -35,17 +35,26 @@ function DashboardPage() {
       {!loading && (
         <>
           {/* Lists */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-10">
             {availableLists.map((list, i) => (
               <div key={i} className="flex flex-col space-y-2">
                 <span className="text-xl font-bold">{list.name}</span>
                 {/* Games in list */}
-                <div className="flex">
+                <div className="flex space-x-4">
                   {games
                     .filter((elem) => elem.list === list.value)
                     .map((game, j) => (
                       <div key={j} className="">
-                        {game.name}
+                        <div
+                          className="relative w-40 text-center bg-center bg-no-repeat bg-cover rounded-lg shadow-md h-72"
+                          style={{
+                            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.8)), url(${
+                              game.info.cover ? game.info.cover.url : ""
+                            })`,
+                          }}
+                        >
+                          <div className="absolute w-full px-1 text-lg font-bold bottom-5">{game.info.name}</div>
+                        </div>
                       </div>
                     ))}
                 </div>
