@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
 
-const { authJwt } = require("../utils");
+const { authJwt, fetchIGDBApi } = require("../utils");
 const db = require("../db");
 
 // Get details for a game in the user's lists
@@ -26,7 +26,17 @@ router.get("/games", authJwt, async (req, res, next) => {
   try {
     const { id: user_id } = res.locals.user;
 
-    const data = await db("users_games").where({ user_id });
+    let data = await db("users_games").where({ user_id });
+
+    // Fetch igdb to get details about the games the user has
+    const listOfGameIds = data.map((game, i) => game.game_id).join(",");
+    const gamesInfo = await fetchIGDBApi("games", `fields name,slug,cover.url; where id = (${listOfGameIds});`, next);
+
+    // Add info from the igdb result to the response
+    for (game of data) {
+      game.info = gamesInfo.filter((elem) => elem.id.toString() == game.game_id.toString())[0];
+    }
+
     res.json(data);
   } catch (err) {
     next(err);
