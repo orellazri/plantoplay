@@ -52,7 +52,7 @@ function Navbar() {
                 items={[
                   {
                     name: "Sign out",
-                    to: "",
+                    to: "#",
                     onClick: handleLogout,
                     icon: <LogoutIcon className="w-6 h-6" />,
                   },

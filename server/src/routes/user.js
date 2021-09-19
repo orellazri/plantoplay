@@ -26,8 +26,8 @@ router.get("/games", authJwt, async (req, res, next) => {
   try {
     const { id: user_id } = res.locals.user;
 
-    const games = await db("users_games").where({ user_id });
-    res.json({ data: games });
+    const data = await db("users_games").where({ user_id });
+    res.json(data);
   } catch (err) {
     next(err);
   }
