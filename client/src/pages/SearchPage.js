@@ -45,7 +45,7 @@ function SearchPage({ match }) {
                 {results.map((result, i) => (
                   <Link to={`/game/${result.slug}`} key={i}>
                     <div
-                      className="relative w-48 text-center bg-center bg-no-repeat bg-cover rounded-lg shadow-md h-80"
+                      className="relative w-48 text-center bg-center bg-no-repeat bg-cover rounded-lg shadow-xl h-80 hover:opacity-80"
                       style={{
                         backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.8)), url(${
                           result.cover ? result.cover.url : ""

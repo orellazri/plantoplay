@@ -98,7 +98,7 @@ function GameDetailsPage({ match }) {
                         <Link key={i} to="#" onClick={() => handleSelectList(list.value)}>
                           <div
                             className={
-                              `flex px-3 py-2 font-semibold rounded-md hover:opacity-90 ` +
+                              `flex px-3 py-2 font-semibold rounded-md hover:opacity-90 hover:shadow-xl ` +
                               (game.user && game.user.list && game.user.list === list.value && ` font-bold`)
                             }
                             style={{ backgroundImage: `linear-gradient(to bottom, ${list.colors[0]}, ${list.colors[1]})` }}
