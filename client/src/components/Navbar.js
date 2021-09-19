@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { logout } from "../utils";
+import { LogoutIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import Button from "./core/Button";
 import Link from "./core/Link";
 import Dropdown from "../components/core/Dropdown";
@@ -22,7 +23,7 @@ function Navbar() {
       <div className="mx-auto max-w-7xl">
         <div className="flex justify-between">
           {/* Left navigation */}
-          <div className="flex md:w-1/2">
+          <div className="flex w-11/12 md:w-1/2">
             <div className="flex items-center w-full space-x-4 sm:space-x-8">
               {/* Logo */}
               <Link to="/" onClick={() => setMobileMenuShown(false)}>
@@ -43,38 +44,27 @@ function Navbar() {
               </Button>
             </div>
           )}
+          {/* User menu */}
           {user.loggedIn && (
             <div className="items-center hidden space-x-3 md:flex">
-              <Dropdown title={user.user.displayName} items={[{ name: "Sign out", to: "", onClick: handleLogout }]} />
+              <Dropdown
+                title={user.user.displayName}
+                items={[
+                  {
+                    name: "Sign out",
+                    to: "",
+                    onClick: handleLogout,
+                    icon: <LogoutIcon className="w-6 h-6" />,
+                  },
+                ]}
+              />
             </div>
           )}
 
           {/* Mobile button */}
           <div className="flex items-center md:hidden">
-            {!mobileMenuShown && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 opacity-80"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="#ffffff"
-                onClick={() => setMobileMenuShown(true)}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-            {mobileMenuShown && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 opacity-80"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="#ffffff"
-                onClick={() => setMobileMenuShown(false)}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            )}
+            {!mobileMenuShown && <MenuIcon className="w-6 h-6 text-white opacity-80" onClick={() => setMobileMenuShown(true)} />}
+            {mobileMenuShown && <XIcon className="w-6 h-6 text-white opacity-80" onClick={() => setMobileMenuShown(false)} />}
           </div>
         </div>
       </div>

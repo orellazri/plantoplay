@@ -5,6 +5,7 @@ import Alert from "../components/core/Alert";
 import { availableLists } from "../utils";
 import Spinner from "../components/core/Spinner";
 import Link from "../components/core/Link";
+import { CheckCircleIcon } from "@heroicons/react/outline";
 
 function GameDetailsPage({ match }) {
   const [error, setError] = useState("");
@@ -105,20 +106,7 @@ function GameDetailsPage({ match }) {
                             {/* List check icon */}
                             {game.user && game.user.list && game.user.list === list.value && (
                               <div className="pr-2">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="w-6 h-6"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
+                                <CheckCircleIcon className="w-6 h-6" />
                               </div>
                             )}
                             <span className="filter drop-shadow-md">{list.name}</span>
