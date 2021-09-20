@@ -19,7 +19,7 @@ Technologies used:
 
 The server requests an access token from Twitch and caches it in memory alongside its expiration date to avoid excessive access token requests.
 
-When a user signs up, it uses bcrypt to generate a salt in 10 rounds, and hashes the password before saving to the database. It then signs a JWT and passes it to the client in an HttpOnly cookie.
+When a user signs up, it uses bcrypt to generate a salt in 10 rounds, and hashes the password before saving it to the database. It then signs a JWT and passes it to the client in an HttpOnly cookie.
 
 The database has an intemediate `users_games` table to store the many-to-many relationship between games and lists of users. The list is an enum.
 
