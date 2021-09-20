@@ -13,7 +13,6 @@ function DashboardPage() {
     const fetchUserGames = async () => {
       try {
         const { data } = await axios.get("/user/games");
-        console.log(data);
         setGames(data);
       } catch (err) {
         console.log(err);
@@ -40,7 +39,7 @@ function DashboardPage() {
               <div key={i} className="flex flex-col space-y-2">
                 <span className="text-xl font-bold">{list.name}</span>
                 {/* Games in list */}
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 overflow-x-scroll hide-scroll-bar">
                   {games
                     .filter((elem) => elem.list === list.value)
                     .map((game, j) => (
