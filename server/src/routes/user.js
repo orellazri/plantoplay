@@ -29,19 +29,8 @@ router.get("/games", authJwt, async (req, res, next) => {
     let data = await db("users_games").where({ user_id });
 
     // Fetch igdb to get details about the games the user has
-
-    // Make multiple requests if the list of game ids is longer than 10 (igdb api limitation)
-    let gamesInfo = [];
-    for (let i = 0; i < Math.ceil(data.length / 10); i++) {
-      const listOfGameIds = data
-        .slice(i * 10, i * 10 + 10)
-        .map((game, i) => game.game_id)
-        .join(",");
-
-      gamesInfo.push(await fetchIGDBApi("games", `fields name,slug,cover.url; where id = (${listOfGameIds});`, next));
-    }
-
-    gamesInfo = gamesInfo.flat();
+    const listOfGameIds = data.map((game, i) => game.game_id).join(",");
+    let gamesInfo = await fetchIGDBApi("games", `fields name,slug,cover.url; limit 500; where id = (${listOfGameIds});`, next);
 
     // Replace cover urls with higher quality ones
     let gamesInfoAsStr = JSON.stringify(gamesInfo);
