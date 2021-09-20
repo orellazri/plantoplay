@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "author": "Orel Lazri",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "@craco/craco": "^6.3.0",
     "@heroicons/react": "^1.0.4",

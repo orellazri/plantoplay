@@ -10,13 +10,13 @@ services:
     ports:
       - 8080:8080
     environment:
-      NODE_ENV:
-      DB_HOST:
+      NODE_ENV: <development | production>
+      DB_HOST: postgres
       DB_PORT: 5432
-      DB_USER:
-      DB_PASSWORD:
-      DB_DATABASE:
-      ACCESS_TOKEN_SECRET:
+      DB_USER: <postgres_user>
+      DB_PASSWORD: <postgres_password>
+      DB_DATABASE: <plantoplay>
+      ACCESS_TOKEN_SECRET: <generate a long secret>
 
   client:
     build:
@@ -28,6 +28,6 @@ services:
   postgres:
     image: postgres:alpine
     environment:
-      POSTGRES_USER:
-      POSTGRES_PASSWORD:
-      POSTGRES_DB:
+      POSTGRES_USER: <postgres_user>
+      POSTGRES_PASSWORD: <postgres_password>
+      POSTGRES_DB: <plantoplay>

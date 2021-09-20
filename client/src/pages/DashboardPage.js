@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { availableLists } from "../utils";
 import Spinner from "../components/core/Spinner";
+import Link from "../components/core/Link";
 
 function DashboardPage() {
   const [loading, setLoading] = useState(true);
@@ -43,7 +44,7 @@ function DashboardPage() {
                   {games
                     .filter((elem) => elem.list === list.value)
                     .map((game, j) => (
-                      <div key={j} className="">
+                      <Link to={`/game/${game.info.slug}`} key={j}>
                         <div
                           className="relative w-40 text-center bg-center bg-no-repeat bg-cover rounded-lg shadow-md h-72"
                           style={{
@@ -54,7 +55,7 @@ function DashboardPage() {
                         >
                           <div className="absolute w-full px-1 text-lg font-bold bottom-5">{game.info.name}</div>
                         </div>
-                      </div>
+                      </Link>
                     ))}
                 </div>
               </div>

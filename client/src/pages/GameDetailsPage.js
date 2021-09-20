@@ -79,10 +79,10 @@ function GameDetailsPage({ match }) {
                   <div className="text-2xl font-bold">{game.name}</div>
                   {/* Summary */}
                   <div className="mt-5 opacity-70">
-                    <p>{game.summary}</p>
+                    <p>{game.summary.length > 700 ? `${game.summary.substring(0, 700)}...` : game.summary}</p>
                   </div>
                   {/* Genres */}
-                  <div className="flex items-center mt-10 space-x-3">
+                  <div className="flex items-center mt-5 space-x-3 ">
                     {game.genres &&
                       game.genres.map((genre, i) => (
                         <div className="px-4 py-2 font-semibold bg-gray-700 rounded-full" key={i}>
