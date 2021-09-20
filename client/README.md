@@ -6,3 +6,4 @@
 - Update `package.json` proxy to the server url
 - Run `yarn install`
 - Run with `yarn start`
+- _(Optionally) To create a production build, use `yarn build`_
