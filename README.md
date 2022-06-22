@@ -1,4 +1,4 @@
-# Plan to Play
+# 🎮 Plan to Play
 
 This is a web app that helps you manage your library and backlog of video games. You can use it to track the games you play, plan to play, finished, and dropped.
 
