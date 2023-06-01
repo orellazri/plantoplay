@@ -11,8 +11,6 @@ Technologies used:
 
 ![Dashboard](assets/demo1.png)
 
-![Search](assets/demo2.png)
-
 ![Game Details](assets/demo3.png)
 
 ## Behind the scenes
